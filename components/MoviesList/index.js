@@ -4,6 +4,7 @@ import styles from './styles';
 import { FlatList } from 'react-native-gesture-handler';
 import Movie from '../Movie';
 import CONSTANTS from '../../constants';
+import Axios from 'axios';
 
 export default class MoviesList extends Component {
   state = {
@@ -14,10 +15,9 @@ export default class MoviesList extends Component {
   };
 
   componentDidMount() {
-    fetch(CONSTANTS.API_URL)
-      .then((res) => res.json())
+    Axios.get(CONSTANTS.API_URL)
       .then((json) => {
-        const data = [...json.results];
+        const data = [...json.data.results];
 
         //sort by name
         // data.sort((a, b) => {
@@ -77,7 +77,7 @@ export default class MoviesList extends Component {
         <FlatList
           data={this.state.sortedData}
           renderItem={({ item }) => (
-            <Movie key={item.key} data={item} {...this.props} />
+            <Movie key={item.key} data={item} { ...this.props} />
           )}
         />
       </View>
