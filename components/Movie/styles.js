@@ -1,4 +1,3 @@
-//import styleSheet for creating a css abstraction.
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,17 +20,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {
-      paddingBottom:20,
-      paddingHorizontal:10,
+    paddingBottom: 20,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     height: 80,
-    alignItems:"baseline"
+    alignItems: 'baseline',
   },
-  votesContainer:{
-flexDirection:"row",
-alignItems:"baseline"
+  votesContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
   },
   votes: {
     color: 'red',

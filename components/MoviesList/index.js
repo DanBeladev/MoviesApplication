@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { FlatList } from 'react-native-gesture-handler';
 import Movie from '../Movie';
-import API_URL from '../../constants'
+import CONSTANTS from '../../constants';
 
 export default class MoviesList extends Component {
   state = {
     search: '',
     movies: [],
-    sortedData:[],
-    loading: true
+    sortedData: [],
+    loading: true,
   };
 
-  componentDidMount(){
-      fetch('https://api.themoviedb.org/3/movie/popular?api_key=42b3d9a3ed6db45b64f5a001e38929cd&language=en-US&page=1')
-      .then((res)=> res.json())
+  componentDidMount() {
+    fetch(CONSTANTS.API_URL)
+      .then((res) => res.json())
       .then((json) => {
         const data = [...json.results];
 
@@ -32,19 +32,19 @@ export default class MoviesList extends Component {
 
         // sort by date
         data.sort((a, b) => {
-            const da = new Date(a.release_date);
-            const db = new Date(b.release_date);
-            if (da < db) {
-              return -1;
-            }
-            if (da > db) {
-              return 1;
-            }
-            return 0;
-          });
+          const da = new Date(a.release_date);
+          const db = new Date(b.release_date);
+          if (da < db) {
+            return -1;
+          }
+          if (da > db) {
+            return 1;
+          }
+          return 0;
+        });
         this.setState({ movies: data, sortedData: data, loading: false });
-        })
-      .catch((err)=>console.log('error with fetch data', err))
+      })
+      .catch((err) => console.log('error with fetch data', err));
   }
 
   onSearchChanged = (text) => {
@@ -58,7 +58,9 @@ export default class MoviesList extends Component {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <ActivityIndicator />
+    ) : (
       <View style={styles.homeDiv}>
         <View style={styles.inputContainer}>
           <TextInput
@@ -74,7 +76,9 @@ export default class MoviesList extends Component {
         </View>
         <FlatList
           data={this.state.sortedData}
-          renderItem={({ item }) => <Movie key={item.key} data={item} {...this.props}/>}
+          renderItem={({ item }) => (
+            <Movie key={item.key} data={item} {...this.props} />
+          )}
         />
       </View>
     );

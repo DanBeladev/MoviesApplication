@@ -1,4 +1,4 @@
-export default data = {
+export default  fdata = {
     "results": [
       {
         "popularity": 187.325,

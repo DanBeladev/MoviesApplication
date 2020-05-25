@@ -1,36 +1,38 @@
 import React from 'react';
-//first import createStackNavigator from react-navigation
 import { NavigationContainer } from '@react-navigation/native';
-//then import StackNavigator for creatign nested routes
 import { createStackNavigator } from '@react-navigation/stack';
-//Import your screens
+import CONSTANTS from './constants';
 import MoviesList from './components/MoviesList';
 import Movie from './components/Movie/screen';
 import Home from './components/Home';
 
 const RootStack = createStackNavigator();
 
-//Define your routes using createStackNavigator, which will be a object full of options.
-
 function AppStack() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName='Home'>
+      <RootStack.Navigator
+        initialRouteName={CONSTANTS.SCREENS.HOME}
+        options={{ headerShown: false }}
+      >
         <RootStack.Screen
-          name='Home'
+          name={CONSTANTS.SCREENS.HOME}
           component={Home}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
-        <RootStack.Screen name='MoviesList' component={MoviesList} />
-        <RootStack.Screen name='Movie' component={Movie} />
+        <RootStack.Screen
+          name={CONSTANTS.SCREENS.MOVIES_LIST}
+          component={MoviesList}
+          options={CONSTANTS.MOVIES_LIST_HEADER_PROPPERTIES}
+        />
+        <RootStack.Screen
+          name={CONSTANTS.SCREENS.MOVIE}
+          component={Movie}
+          options={CONSTANTS.MOVIES_DETAILS_HEADER_PROPPERTIES}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
 }
-
-// //Export default the stateless component
-// const App = () => {
-//   return <AppStack />;
-// };
 
 export default AppStack;
